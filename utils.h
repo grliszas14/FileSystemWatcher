@@ -9,7 +9,7 @@ enum class FileState {
     Renamed
 };
 
-enum class Type {
+enum class FileType {
     File,
     Directory
 };

@@ -11,8 +11,6 @@ QString WatchedPath::path() const
 QString WatchedPath::state() const
 {
     switch(m_state) {
-    case FileState::Unknown:
-        return QStringLiteral("Unknown");
     case FileState::Created:
         return QStringLiteral("Created");
     case FileState::Deleted:
@@ -21,6 +19,8 @@ QString WatchedPath::state() const
         return QStringLiteral("Edited");
     case FileState::Renamed:
         return QStringLiteral("Renamed");
+    default:
+        return QStringLiteral("Unknown");
     }
 
 }

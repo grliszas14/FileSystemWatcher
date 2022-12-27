@@ -51,6 +51,7 @@ Item {
                     }
 
                     Label {
+                        // this should be remove button!
                         text: model.status
                         Layout.alignment: Qt.AlignRight
                         color: Theme.fontColor

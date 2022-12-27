@@ -1,9 +1,10 @@
 import QtQuick 2.15
 import QtQuick.Dialogs
+import Qt.labs.platform
 
 Item {
-    id: fileInput
-    property alias text: filePath.text
+    id: folderInput
+    property alias text: folderPath.text
 
     Rectangle {
         id: fileInputRect
@@ -14,7 +15,7 @@ Item {
         border.color: Theme.borderColor
 
         TextInput {
-            id: filePath
+            id: folderPath
             width: parent.width
             height: parent.height
             font.pixelSize: parent.height - 2 * padding
@@ -26,18 +27,19 @@ Item {
                 propagateComposedEvents: true
 
                 onClicked: {
-                    fileDialog.open()
+                    folderDialog.open()
                 }
             }
         }
     }
 
-    FileDialog {
-        id: fileDialog
+    FolderDialog {
+        id: folderDialog
+        currentFolder: StandardPaths.writableLocation(StandardPaths.HomeLocation)
 
         // add default home path
         onAccepted: {
-            filePath.text = selectedFile
+            folderPath.text = folder
         }
     }
 }

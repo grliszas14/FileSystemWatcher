@@ -2,7 +2,7 @@
 
 WatchedPathsModel::WatchedPathsModel(QObject *parent)
 {
-    populate();
+//    populate();
 }
 
 int WatchedPathsModel::rowCount(const QModelIndex& parent) const

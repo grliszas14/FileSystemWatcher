@@ -23,8 +23,8 @@ Window {
             Layout.alignment: Qt.AlignCenter
             Layout.margins: 20
 
-            FileInput {
-                id: fileInput
+            FolderInput {
+                id: folderInput
                 Layout.preferredHeight: 30
                 Layout.preferredWidth: 800
                 Layout.fillWidth: true
@@ -37,8 +37,8 @@ Window {
                 text: "Add"
 
                 onClicked: {
-                    if (fileInput.text !== "") {
-                        watchedPathsModel.appendPath(fileInput.text)
+                    if (folderInput.text !== "") {
+                        watchedPathsModel.appendPath(folderInput.text)
                     }
                 }
             }
@@ -95,7 +95,7 @@ Window {
 
                     onClicked: {
                         // clear events, not watched paths
-                        watchedPathsModel.clear()
+//                        watchedPathsModel.clear()
                     }
                 }
                 StyledButton {
@@ -103,6 +103,10 @@ Window {
                     Layout.preferredHeight: 30
                     Layout.preferredWidth: 90
                     text: "Start"
+
+                    onClicked: {
+
+                    }
                 }
                 StyledButton {
                     id: stopButton

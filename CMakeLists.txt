@@ -18,6 +18,9 @@ set(PROJECT_SOURCES
         main.cpp
         watchedpath.h watchedpath.cpp
         watchedpathsmodel.h watchedpathsmodel.cpp
+        eventmodel.h eventmodel.cpp
+        filewatcher.h filewatcher.cpp
+        event.h event.cpp
         utils.h
         qml.qrc
         ${TS_FILES}
