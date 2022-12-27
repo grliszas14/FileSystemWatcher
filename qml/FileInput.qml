@@ -8,9 +8,9 @@ Item {
         id: fileInputRect
         width: parent.width
         height: parent.height
-        radius: 10
-        border.width: 2
-        border.color: "black"
+        radius: Theme.borderRadius
+        border.width: Theme.borderWidth
+        border.color: Theme.borderColor
 
         TextInput {
             id: filePath
@@ -29,8 +29,6 @@ Item {
                     fileDialog.open()
                 }
             }
-
-
         }
     }
 

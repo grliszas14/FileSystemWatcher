@@ -2,10 +2,10 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Layouts
 import QtQuick.Controls
-import "."
+import "." // needed for using Theme
 
 Window {
-    width: 1000
+    width: 700
     height: 600
     visible: true
     title: qsTr("File System Watcher")
@@ -13,29 +13,93 @@ Window {
 
     ColumnLayout {
         Layout.alignment: Qt.AlignCenter
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        width: parent.width
+        height: parent.height
+
         RowLayout {
             spacing: 20
             Layout.alignment: Qt.AlignCenter
+            Layout.margins: 20
 
             FileInput {
                 id: fileInput
-                Layout.preferredWidth: 800
                 Layout.preferredHeight: 30
+                Layout.preferredWidth: 800
+                Layout.fillWidth: true
             }
 
-            Button {
+            StyledButton {
                 id: addButton
-                width: 50
-                height: 30
+                Layout.preferredHeight: 30
+                Layout.preferredWidth: 90
                 text: "Add"
             }
         }
 
-        Label {
-            id: watchedPathsLabel
-            text: "Watched paths"
-            font.pixelSize: Theme.fontSize
-            color: Theme.fontColor
+        ColumnLayout {
+            Label {
+                id: watchedPathsLabel
+                text: "Watched paths"
+                font.pixelSize: Theme.fontSize
+                color: Theme.fontColor
+                Layout.alignment: Qt.AlignLeft
+                Layout.leftMargin: 20
+                Layout.rightMargin: 20
+            }
+
+            WatchedPathsList {
+                id: watchedPathsList
+                Layout.preferredHeight: 200
+                Layout.preferredWidth: 900
+                Layout.alignment: Qt.AlignCenter
+                Layout.fillWidth: true
+                Layout.leftMargin: 20
+                Layout.rightMargin: 20
+                Layout.bottomMargin: 20
+                Layout.fillHeight: true
+            }
+        }
+
+        ColumnLayout {
+            EventTable {
+                id: eventTable
+                Layout.preferredHeight: 200
+                Layout.preferredWidth: 900
+                Layout.alignment: Qt.AlignCenter
+                Layout.fillWidth: true
+                Layout.leftMargin: 20
+                Layout.rightMargin: 20
+                Layout.fillHeight: true
+            }
+
+            RowLayout {
+                Layout.alignment: Qt.AlignLeft
+                Layout.leftMargin: 20
+                Layout.rightMargin: 20
+                Layout.bottomMargin: 20
+                spacing: 20
+
+                StyledButton {
+                    id: clearButton
+                    Layout.preferredHeight: 30
+                    Layout.preferredWidth: 90
+                    text: "Clear"
+                }
+                StyledButton {
+                    id: startButton
+                    Layout.preferredHeight: 30
+                    Layout.preferredWidth: 90
+                    text: "Start"
+                }
+                StyledButton {
+                    id: stopButton
+                    Layout.preferredHeight: 30
+                    Layout.preferredWidth: 90
+                    text: "Stop"
+                }
+            }
         }
     }
 }
