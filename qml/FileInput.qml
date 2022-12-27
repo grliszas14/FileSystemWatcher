@@ -3,6 +3,7 @@ import QtQuick.Dialogs
 
 Item {
     id: fileInput
+    property alias text: filePath.text
 
     Rectangle {
         id: fileInputRect
@@ -25,7 +26,6 @@ Item {
                 propagateComposedEvents: true
 
                 onClicked: {
-                    console.log("clicked on TextInput")
                     fileDialog.open()
                 }
             }

@@ -35,6 +35,12 @@ Window {
                 Layout.preferredHeight: 30
                 Layout.preferredWidth: 90
                 text: "Add"
+
+                onClicked: {
+                    if (fileInput.text !== "") {
+                        watchedPathsModel.appendPath(fileInput.text)
+                    }
+                }
             }
         }
 
@@ -86,6 +92,11 @@ Window {
                     Layout.preferredHeight: 30
                     Layout.preferredWidth: 90
                     text: "Clear"
+
+                    onClicked: {
+                        // clear events, not watched paths
+                        watchedPathsModel.clear()
+                    }
                 }
                 StyledButton {
                     id: startButton

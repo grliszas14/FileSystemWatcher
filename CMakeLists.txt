@@ -16,6 +16,9 @@ set(TS_FILES FileSystemWatcher_en_US.ts)
 
 set(PROJECT_SOURCES
         main.cpp
+        watchedpath.h watchedpath.cpp
+        watchedpathsmodel.h watchedpathsmodel.cpp
+        utils.h
         qml.qrc
         ${TS_FILES}
 )
