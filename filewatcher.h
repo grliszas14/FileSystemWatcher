@@ -15,6 +15,7 @@ public:
     QStringList getCurrentPaths(QList<WatchedPath> paths);
     void scan(QList<WatchedPath> paths);
     QString substraction(QStringList biggerList, QStringList smallerList);
+    bool compare(QStringList listA, QStringList listB) const;
     Event evaluateEvent(const QString &eventPath, FileType type);
 
 public slots:

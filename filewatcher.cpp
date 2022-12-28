@@ -98,6 +98,19 @@ QString FileWatcher::substraction(QStringList biggerList, QStringList smallerLis
     return biggerList.last();
 }
 
+bool FileWatcher::compare(QStringList listA, QStringList listB) const
+{
+    for (auto i = 0; i < listA.size(); i++)
+    {
+        if (listA[i] == listB[i])
+        {
+            continue;
+        }
+        return false;
+    }
+    return true;
+}
+
 Event FileWatcher::evaluateEvent(const QString &eventPath, FileType type)
 {
     m_paths.removeDuplicates();
@@ -106,28 +119,33 @@ Event FileWatcher::evaluateEvent(const QString &eventPath, FileType type)
     std::sort(newList.begin(), newList.end());
     std::sort(oldList.begin(), oldList.end());
 
+    m_paths = newList;
+    stop();
+    start();
+
     if (newList.size() > oldList.size())
     {
         auto newPath = substraction(newList, oldList);
         qDebug() << "Event: (Created, " << newPath << ", dir=" << static_cast<int>(type) << ", " << QDateTime::currentDateTime() << ")";
-        m_paths = newList;
-        stop();
-        start();
-        qDebug() << "Currently tracked dirs: " << m_watcher.directories();
         return Event(FileState::Created, newPath, static_cast<bool>(type), QDateTime::currentDateTime());
     } else if (newList.size() < oldList.size())
     {
         auto newPath = substraction(oldList, newList);
         qDebug() << "Event: (Removed, " << newPath << ", dir=" << static_cast<int>(type) << ", " << QDateTime::currentDateTime() << ")";
-        m_paths = newList;
-        stop();
-        start();
-        qDebug() << "Currently tracked dirs: " << m_watcher.directories();
+
         return Event(FileState::Removed, newPath, static_cast<bool>(type), QDateTime::currentDateTime());
     } else if (newList.size() == oldList.size())
     {
-        qDebug() << "Event: (Edited, " << eventPath << ", dir=" << static_cast<int>(type) << ", " << QDateTime::currentDateTime() << ")";
-        return Event(FileState::Edited, eventPath, static_cast<bool>(type), QDateTime::currentDateTime());
+        if (compare(newList, oldList))
+        {
+            qDebug() << "Event: (Edited, " << eventPath << ", dir=" << static_cast<int>(type) << ", " << QDateTime::currentDateTime() << ")";
+            return Event(FileState::Edited, eventPath, static_cast<bool>(type), QDateTime::currentDateTime());
+        } else
+        {
+            auto newPath = substraction(newList, oldList);
+            qDebug() << "Event: (Renamed, " << newPath << ", dir=" << static_cast<int>(type) << ", " << QDateTime::currentDateTime() << ")";
+            return Event(FileState::Renamed, newPath, static_cast<bool>(type), QDateTime::currentDateTime());
+        }
     }
 }
 
