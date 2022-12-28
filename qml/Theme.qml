@@ -10,4 +10,8 @@ QtObject {
     property int borderWidth: 2
     property color borderColor: "black"
     property int borderRadius: 10
+
+    // table
+    property int tableRowWidth: 250
+    property int tableRowHeight: 25
 }

@@ -9,10 +9,10 @@ class Event
 {
 public:
     explicit Event(const FileState& fileState, const QString& path, bool isFolder, const QDateTime& timestamp);
-    QString path() const;
-    QString state() const;
-    bool isDir() const;
-    QDateTime timestamp() const;
+    QString path() const noexcept;
+    QString state() const noexcept;
+    bool isDir() const noexcept;
+    QDateTime timestamp() const noexcept;
 
 private:
     QString m_path;

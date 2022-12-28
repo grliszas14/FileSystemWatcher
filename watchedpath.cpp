@@ -12,12 +12,12 @@ WatchedPath::WatchedPath(const QString& path)
     }
 }
 
-QString WatchedPath::path() const
+QString WatchedPath::path() const noexcept
 {
     return m_path;
 }
 
-QString WatchedPath::state() const
+QString WatchedPath::state() const noexcept
 {
     switch(m_state) {
     case FileState::Created:

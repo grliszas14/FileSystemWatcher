@@ -4,12 +4,12 @@ Event::Event(const FileState &fileState, const QString &path, bool isFolder, con
     : m_state{fileState}, m_path{path}, m_isFolder{isFolder}, m_timestamp{timestamp}
 {}
 
-QString Event::path() const
+QString Event::path() const noexcept
 {
     return m_path;
 }
 
-QString Event::state() const
+QString Event::state() const noexcept
 {
     switch(m_state) {
     case FileState::Created:
@@ -25,12 +25,12 @@ QString Event::state() const
     }
 }
 
-bool Event::isDir() const
+bool Event::isDir() const noexcept
 {
     return m_isFolder;
 }
 
-QDateTime Event::timestamp() const
+QDateTime Event::timestamp() const noexcept
 {
     return m_timestamp;
 }

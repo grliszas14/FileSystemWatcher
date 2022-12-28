@@ -50,7 +50,7 @@ QStringList FileWatcher::getCurrentPaths(QList<WatchedPath> watchedPaths)
     return currentPaths;
 }
 
-void FileWatcher::scan(QList<WatchedPath> watchedPaths)
+void FileWatcher::scan(const QList<WatchedPath> &watchedPaths)
 {
     auto sortedPaths = getCurrentPaths(watchedPaths);
     std::sort(sortedPaths.begin(), sortedPaths.end());
@@ -85,7 +85,7 @@ void FileWatcher::fileChanged(const QString &path)
     m_eventModel->addEvent(event);
 }
 
-QString FileWatcher::substraction(QStringList biggerList, QStringList smallerList)
+QString FileWatcher::substraction(const QStringList& biggerList, const QStringList& smallerList)
 {
     for (auto i = 0; i < smallerList.size(); i++)
     {
@@ -98,7 +98,7 @@ QString FileWatcher::substraction(QStringList biggerList, QStringList smallerLis
     return biggerList.last();
 }
 
-bool FileWatcher::compare(QStringList listA, QStringList listB) const
+bool FileWatcher::compare(const QStringList &listA, const QStringList &listB) const
 {
     for (auto i = 0; i < listA.size(); i++)
     {

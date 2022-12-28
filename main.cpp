@@ -43,8 +43,5 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty(QStringLiteral("fileWatcher"), &fileWatcher);
     engine.load(url);
 
-
-
-
     return app.exec();
 }

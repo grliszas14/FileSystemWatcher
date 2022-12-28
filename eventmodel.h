@@ -16,11 +16,6 @@ public:
 
     enum {
         TableDataRole = Qt::UserRole,
-        HeadingRole,
-        PathRole,
-        StatusRole,
-        DirRole,
-        TimestampRole
     };
 
     virtual QHash<int, QByteArray> roleNames() const override;

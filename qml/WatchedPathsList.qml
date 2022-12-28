@@ -42,6 +42,7 @@ Item {
 
                     Button {
                         text: "Remove"
+                        Layout.alignment: Qt.AlignRight
 
                         onClicked: {
                             watchedPathsModel.removePath(index)
