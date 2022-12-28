@@ -5,6 +5,9 @@
 Just open project in QtCreator and hit build&run
 
 ## Comments
+Supported platforms: Linux only
+(can be extended after fixing WatchedPath class)
+
 
 Key points:
 * OK - use of QFileSystemWatcher class
