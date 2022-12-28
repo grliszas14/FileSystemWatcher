@@ -50,7 +50,7 @@ QStringList FileWatcher::getCurrentPaths(QList<WatchedPath> watchedPaths)
     return currentPaths;
 }
 
-void FileWatcher::initialize(QList<WatchedPath> watchedPaths)
+void FileWatcher::scan(QList<WatchedPath> watchedPaths)
 {
     auto sortedPaths = getCurrentPaths(watchedPaths);
     std::sort(sortedPaths.begin(), sortedPaths.end());
@@ -59,7 +59,7 @@ void FileWatcher::initialize(QList<WatchedPath> watchedPaths)
 
 void FileWatcher::start()
 {
-    initialize(m_watchedPathsModel->paths());
+    scan(m_watchedPathsModel->paths());
 
     m_watcher.addPaths(m_paths);
     connect(&m_watcher, &QFileSystemWatcher::fileChanged, this, &FileWatcher::fileChanged);
@@ -100,6 +100,7 @@ QString FileWatcher::substraction(QStringList biggerList, QStringList smallerLis
 
 Event FileWatcher::evaluateEvent(const QString &eventPath, FileType type)
 {
+    m_paths.removeDuplicates();
     QStringList newList = getCurrentPaths(m_watchedPathsModel->paths());
     QStringList oldList = m_paths;
     std::sort(newList.begin(), newList.end());
@@ -109,32 +110,18 @@ Event FileWatcher::evaluateEvent(const QString &eventPath, FileType type)
     {
         auto newPath = substraction(newList, oldList);
         qDebug() << "Event: (Created, " << newPath << ", dir=" << static_cast<int>(type) << ", " << QDateTime::currentDateTime() << ")";
-        QList<WatchedPath> tmp;
-        tmp.append(WatchedPath(newPath));
-        auto newPaths = getCurrentPaths(tmp);
-        if (!newPaths.isEmpty())
-        {
-            m_paths.append(newPaths);
-            m_watcher.addPaths(newPaths);
-        }
+        m_paths = newList;
+        stop();
+        start();
         qDebug() << "Currently tracked dirs: " << m_watcher.directories();
         return Event(FileState::Created, newPath, static_cast<bool>(type), QDateTime::currentDateTime());
     } else if (newList.size() < oldList.size())
     {
         auto newPath = substraction(oldList, newList);
         qDebug() << "Event: (Removed, " << newPath << ", dir=" << static_cast<int>(type) << ", " << QDateTime::currentDateTime() << ")";
-        QList<WatchedPath> tmp;
-        tmp.append(WatchedPath(newPath));
-        auto newPaths = getCurrentPaths(tmp);
-        if (!newPaths.isEmpty())
-        {
-            for (const auto &p : newPaths)
-            {
-                m_paths.removeAll(p);
-            }
-            m_watcher.removePaths(newPaths);
-        }
-
+        m_paths = newList;
+        stop();
+        start();
         qDebug() << "Currently tracked dirs: " << m_watcher.directories();
         return Event(FileState::Removed, newPath, static_cast<bool>(type), QDateTime::currentDateTime());
     } else if (newList.size() == oldList.size())

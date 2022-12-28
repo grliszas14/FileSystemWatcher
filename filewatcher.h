@@ -13,7 +13,7 @@ class FileWatcher : public QObject
 public:
     FileWatcher(QObject *parent = nullptr, WatchedPathsModel *model = nullptr, EventModel *eventModel = nullptr);
     QStringList getCurrentPaths(QList<WatchedPath> paths);
-    void initialize(QList<WatchedPath> paths);
+    void scan(QList<WatchedPath> paths);
     QString substraction(QStringList biggerList, QStringList smallerList);
     Event evaluateEvent(const QString &eventPath, FileType type);
 
