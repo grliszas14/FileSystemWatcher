@@ -2,7 +2,6 @@
 
 WatchedPathsModel::WatchedPathsModel(QObject *parent)
 {
-//    populate();
 }
 
 int WatchedPathsModel::rowCount(const QModelIndex& parent) const
@@ -21,7 +20,6 @@ QVariant WatchedPathsModel::data(const QModelIndex &index, int role) const
     case StatusRole:
         return QVariant(m_paths.at(index.row()).state());
     }
-//        return m_paths[index.row()].path();
 
     return QVariant();
 }
@@ -33,10 +31,10 @@ void WatchedPathsModel::appendPath(const QString &path)
     endResetModel();
 }
 
-void WatchedPathsModel::removePath(const QModelIndex &index)
+void WatchedPathsModel::removePath(const int index)
 {
     beginResetModel();
-    m_paths.removeAt(index.row());
+    m_paths.removeAt(index);
     endResetModel();
 }
 
@@ -47,19 +45,9 @@ void WatchedPathsModel::clear()
     endResetModel();
 }
 
-// test method to remove later
-void WatchedPathsModel::populate()
+QList<WatchedPath> WatchedPathsModel::paths() const
 {
-    beginResetModel();
-    m_paths.clear();
-    m_paths.append(WatchedPath("/home/grliszas14/toWatch"));
-    m_paths.append(WatchedPath("/home/grliszas14/toWatch2"));
-    m_paths.append(WatchedPath("/home/grliszas14/toWatch3"));
-    m_paths.append(WatchedPath("/home/grliszas14/toWatch4"));
-    m_paths.append(WatchedPath("/home/grliszas14/toWatch5"));
-    m_paths.append(WatchedPath("/home/grliszas14/toWatch6"));
-    m_paths.append(WatchedPath("/home/grliszas14/toWatch7"));
-    endResetModel();
+    return m_paths;
 }
 
 QHash<int, QByteArray> WatchedPathsModel::roleNames() const

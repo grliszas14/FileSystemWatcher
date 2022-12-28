@@ -8,7 +8,11 @@
 class Event
 {
 public:
-    explicit Event(const QString& path, const FileState& fileState, bool isFolder, const QDateTime& timestamp);
+    explicit Event(const FileState& fileState, const QString& path, bool isFolder, const QDateTime& timestamp);
+    QString path() const;
+    QString state() const;
+    bool isDir() const;
+    QDateTime timestamp() const;
 
 private:
     QString m_path;

@@ -5,7 +5,7 @@ import QtQuick.Controls
 import "." // needed for using Theme
 
 Window {
-    width: 700
+    width: 1050
     height: 600
     visible: true
     title: qsTr("File System Watcher")
@@ -94,8 +94,7 @@ Window {
                     text: "Clear"
 
                     onClicked: {
-                        // clear events, not watched paths
-//                        watchedPathsModel.clear()
+                        eventModel.clear()
                     }
                 }
                 StyledButton {
@@ -105,7 +104,7 @@ Window {
                     text: "Start"
 
                     onClicked: {
-
+                        fileWatcher.start()
                     }
                 }
                 StyledButton {
@@ -113,6 +112,10 @@ Window {
                     Layout.preferredHeight: 30
                     Layout.preferredWidth: 90
                     text: "Stop"
+
+                    onClicked: {
+                        fileWatcher.stop()
+                    }
                 }
             }
         }

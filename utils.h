@@ -4,7 +4,7 @@
 enum class FileState {
     Unknown,
     Created,
-    Deleted,
+    Removed,
     Edited,
     Renamed
 };

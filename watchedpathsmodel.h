@@ -7,14 +7,13 @@
 class WatchedPathsModel : public QAbstractListModel
 {
     Q_OBJECT
-//    Q_PROPERTY(QList<WatchedPath> paths READ paths WRITE setPaths NOTIFY pathsChanged)
 
 public:
     WatchedPathsModel(QObject * parent = 0);
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role) const override;
 
-    void populate(); // test method to remove later
+    QList<WatchedPath> paths() const;
 
     enum {
         PathRole = Qt::UserRole,
@@ -25,7 +24,7 @@ public:
 
 public slots:
     void appendPath(const QString& path);
-    void removePath(const QModelIndex &index);
+    void removePath(const int index);
     void clear();
 
 private:

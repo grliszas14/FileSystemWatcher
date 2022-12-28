@@ -1,3 +1,5 @@
+#include "eventmodel.h"
+#include "filewatcher.h"
 #include "qstringliteral.h"
 #include "watchedpathsmodel.h"
 #include <QGuiApplication>
@@ -14,8 +16,6 @@ int main(int argc, char *argv[])
 #endif
     QGuiApplication app(argc, argv);
 
-    qmlRegisterType<WatchedPathsModel>("WatchedPathsModel", 1, 0, "WatchedPathsModel");
-
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();
     for (const QString &locale : uiLanguages) {
@@ -26,17 +26,21 @@ int main(int argc, char *argv[])
         }
     }
 
-    WatchedPathsModel watchedPathsModel = new WatchedPathsModel;
+    WatchedPathsModel watchedPathsModel = WatchedPathsModel();
+    EventModel eventModel = EventModel();
+    FileWatcher fileWatcher = FileWatcher(nullptr, &watchedPathsModel, &eventModel);
 
     QQmlApplicationEngine engine;
-
     const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
         if (!obj && url == objUrl)
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
+
     engine.rootContext()->setContextProperty(QStringLiteral("watchedPathsModel"), &watchedPathsModel);
+    engine.rootContext()->setContextProperty(QStringLiteral("eventModel"), &eventModel);
+    engine.rootContext()->setContextProperty(QStringLiteral("fileWatcher"), &fileWatcher);
     engine.load(url);
 
 

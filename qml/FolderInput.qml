@@ -37,7 +37,6 @@ Item {
         id: folderDialog
         currentFolder: StandardPaths.writableLocation(StandardPaths.HomeLocation)
 
-        // add default home path
         onAccepted: {
             folderPath.text = folder
         }

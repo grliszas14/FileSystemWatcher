@@ -1,7 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls
 import QtQuick.Layouts
-import WatchedPathsModel 1.0
 
 
 Item {
@@ -13,8 +12,6 @@ Item {
         border.color: Theme.borderColor
         radius: Theme.borderRadius
         clip: true
-
-        // todo: change it -> display rows and line and print delegates on it
 
         ListView {
             id: watchedPathsListView
@@ -43,21 +40,14 @@ Item {
                         color: Theme.fontColor
                     }
 
-                    Rectangle {
-                        id: line
-                        color: "black"
-                        Layout.preferredWidth: 2
-                        Layout.preferredHeight: delegateRect.height
-                    }
+                    Button {
+                        text: "Remove"
 
-                    Label {
-                        // this should be remove button!
-                        text: model.status
-                        Layout.alignment: Qt.AlignRight
-                        color: Theme.fontColor
+                        onClicked: {
+                            watchedPathsModel.removePath(index)
+                        }
                     }
                 }
-
             }
         }
     }
